@@ -11,8 +11,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -38,6 +40,16 @@ public class BarcodeUI {
     private final String readNewCodeString = "Read New Code";
     private final String exitButtonString = "Exit";
     private final String exitText = "Exit?";
+    private final String yesText = "Yes";
+    private final String noText = "No";
+    private final String closeButtonString = "Close";
+    private final String newReadText = "New Read";
+    private final String fileNameText = "File Name: ";
+    private final String fileTextFieldText = "File Name";
+    private final String browseText = "Browse";
+    private final String okText = "OK";
+    private final String filePathText = "File Path: ";
+    private final String filePathFieldText = "File Path";
 
     public BarcodeUI() {
         initMainPane();
@@ -85,11 +97,11 @@ public class BarcodeUI {
         dialogStage.initModality(Modality.WINDOW_MODAL);
         dialogStage.initOwner(primaryStage);
         BorderPane exitPane = new BorderPane();
-        Button yesButton = new Button("Yes");
+        Button yesButton = new Button(yesText);
         yesButton.setOnAction((ActionEvent event) -> {
             System.exit(0);
         });
-        Button noButton = new Button("No");
+        Button noButton = new Button(noText);
         noButton.setOnAction((ActionEvent event) -> {
             dialogStage.close();
         });
@@ -98,22 +110,116 @@ public class BarcodeUI {
         exitBox.getChildren().add(noButton);
         exitBox.setSpacing(10.0);
         exitBox.setAlignment(Pos.CENTER);
+        exitBox.setPadding(marginlessInsets);
         Text text = new Text(exitText);
         exitPane.setBottom(exitBox);
         exitPane.setCenter(text);
         Scene scene = new Scene(exitPane, 200, 100);
         dialogStage.setScene(scene);
+        dialogStage.setTitle(exitText);
+        dialogStage.setResizable(false);
         dialogStage.show();
     }
 
     void newRead() {
-        System.out.println("Method not yet supported.");
-        //To change body of generated methods, choose Tools | Templates.
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        BorderPane newReadPane = new BorderPane();
+        //Middle
+        VBox middle = new VBox();
+        HBox middleBox = new HBox();
+        Text fileText = new Text(fileNameText);
+        TextField fileName = new TextField(fileTextFieldText);
+        Button browse = new Button(browseText);
+        middleBox.getChildren().add(fileText);
+        middleBox.getChildren().add(fileName);
+        middleBox.getChildren().add(browse);
+        middleBox.setSpacing(10.0);
+        middleBox.setAlignment(Pos.CENTER);
+        middle.getChildren().add(middleBox);
+        Button ok = new Button(okText);
+        ok.setOnAction((ActionEvent event) -> {
+            eventHandler.respondToButtonPress("newRead");
+            dialogStage.close();
+        });
+        HBox okBox = new HBox();
+        okBox.getChildren().add(ok);
+        okBox.setAlignment(Pos.CENTER);
+        okBox.setPadding(marginlessInsets);
+        middle.getChildren().add(okBox);
+        middle.setPadding(marginlessInsets);
+        //Bottom
+        Button closeButton = new Button(closeButtonString);
+        closeButton.setOnAction((ActionEvent event) -> {
+            dialogStage.close();
+        });
+        HBox closeButtonBox = new HBox();
+        closeButtonBox.getChildren().add(closeButton);
+        closeButtonBox.setAlignment(Pos.CENTER);
+        closeButtonBox.setPadding(marginlessInsets);
+        //Adding it all together.
+        newReadPane.setCenter(middle);
+        newReadPane.setBottom(closeButtonBox);
+        Scene scene = new Scene(newReadPane, 300, 100);
+        dialogStage.setScene(scene);
+        dialogStage.setTitle(newReadText);
+        dialogStage.setResizable(false);
+        dialogStage.show();
     }
 
     void newCode() {
-        System.out.println("Method not yet supported.");
-        //To change body of generated methods, choose Tools | Templates.
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        BorderPane newReadPane = new BorderPane();
+        //Middle
+        VBox middle = new VBox();
+        HBox middleBox = new HBox();
+        HBox middleBox2 = new HBox();
+        Text fileText = new Text(fileNameText);
+        TextField fileName = new TextField(fileTextFieldText);
+        middleBox.getChildren().add(fileText);
+        middleBox.getChildren().add(fileName);
+        Text filePath = new Text(filePathText);
+        TextField filePathField = new TextField(filePathFieldText);
+        Button browse = new Button(browseText);
+        middleBox2.getChildren().add(filePath);
+        middleBox2.getChildren().add(filePathField);
+        middleBox2.getChildren().add(browse);
+        middleBox.setSpacing(10.0);
+        middleBox.setAlignment(Pos.CENTER);
+        middleBox.setPadding(marginlessInsets);
+        middleBox2.setAlignment(Pos.CENTER);
+        middleBox2.setPadding(marginlessInsets);
+        middle.getChildren().add(middleBox);
+        middle.getChildren().add(middleBox2);
+        Button ok = new Button(okText);
+        ok.setOnAction((ActionEvent event) -> {
+            eventHandler.respondToButtonPress("newRead");
+            dialogStage.close();
+        });
+        HBox okBox = new HBox();
+        okBox.getChildren().add(ok);
+        okBox.setAlignment(Pos.CENTER);
+        middle.getChildren().add(okBox);
+        //Bottom
+        Button closeButton = new Button(closeButtonString);
+        closeButton.setOnAction((ActionEvent event) -> {
+            dialogStage.close();
+        });
+        HBox closeButtonBox = new HBox();
+        closeButtonBox.getChildren().add(closeButton);
+        closeButtonBox.setAlignment(Pos.CENTER);
+        closeButtonBox.setPadding(marginlessInsets);
+        //Adding it all together.
+        newReadPane.setCenter(middle);
+        newReadPane.setBottom(closeButtonBox);
+        Scene scene = new Scene(newReadPane, 300, 135);
+        dialogStage.setScene(scene);
+        dialogStage.setTitle(newReadText);
+        dialogStage.setResizable(false);
+        dialogStage.show();
     }
 
 }
