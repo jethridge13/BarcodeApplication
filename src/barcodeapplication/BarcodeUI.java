@@ -50,6 +50,12 @@ public class BarcodeUI {
     private final String okText = "OK";
     private final String filePathText = "File Path: ";
     private final String filePathFieldText = "File Path";
+    private final String codeReadText = "Code Read!";
+    private final String invalidFileText = "That file is invalid!";
+    private final String invalidFileTitle = "Invalid file!";
+    
+    private TextField fileName;
+    private TextField filePathField;
 
     public BarcodeUI() {
         initMainPane();
@@ -130,7 +136,7 @@ public class BarcodeUI {
         VBox middle = new VBox();
         HBox middleBox = new HBox();
         Text fileText = new Text(fileNameText);
-        TextField fileName = new TextField(fileTextFieldText);
+        fileName = new TextField(fileTextFieldText);
         Button browse = new Button(browseText);
         middleBox.getChildren().add(fileText);
         middleBox.getChildren().add(fileName);
@@ -178,11 +184,11 @@ public class BarcodeUI {
         HBox middleBox = new HBox();
         HBox middleBox2 = new HBox();
         Text fileText = new Text(fileNameText);
-        TextField fileName = new TextField(fileTextFieldText);
+        fileName = new TextField(fileTextFieldText);
         middleBox.getChildren().add(fileText);
         middleBox.getChildren().add(fileName);
         Text filePath = new Text(filePathText);
-        TextField filePathField = new TextField(filePathFieldText);
+        filePathField = new TextField(filePathFieldText);
         Button browse = new Button(browseText);
         middleBox2.getChildren().add(filePath);
         middleBox2.getChildren().add(filePathField);
@@ -196,7 +202,7 @@ public class BarcodeUI {
         middle.getChildren().add(middleBox2);
         Button ok = new Button(okText);
         ok.setOnAction((ActionEvent event) -> {
-            eventHandler.respondToButtonPress("newRead");
+            eventHandler.respondToButtonPress("newCode");
             dialogStage.close();
         });
         HBox okBox = new HBox();
@@ -218,6 +224,64 @@ public class BarcodeUI {
         Scene scene = new Scene(newReadPane, 300, 135);
         dialogStage.setScene(scene);
         dialogStage.setTitle(newReadText);
+        dialogStage.setResizable(false);
+        dialogStage.show();
+    }
+
+    String getFileName() {
+        CharSequence chars = fileName.getCharacters();
+        return chars.toString();
+    }
+
+    String getFilePath() {
+        CharSequence chars = fileName.getCharacters();
+        return chars.toString();
+    }
+
+    void displayRead(String read) {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        BorderPane exitPane = new BorderPane();
+        Button okButton = new Button(okText);
+        okButton.setOnAction((ActionEvent event) -> {
+            dialogStage.close();
+        });
+        HBox okBox = new HBox();
+        okBox.getChildren().add(okButton);
+        okBox.setSpacing(10.0);
+        okBox.setAlignment(Pos.CENTER);
+        okBox.setPadding(marginlessInsets);
+        Text text = new Text(read);
+        exitPane.setBottom(okBox);
+        exitPane.setCenter(text);
+        Scene scene = new Scene(exitPane, 200, 100);
+        dialogStage.setScene(scene);
+        dialogStage.setTitle(codeReadText);
+        dialogStage.setResizable(false);
+        dialogStage.show();
+    }
+
+    void showInvalidFileBox() {
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        BorderPane exitPane = new BorderPane();
+        Button okButton = new Button(okText);
+        okButton.setOnAction((ActionEvent event) -> {
+            dialogStage.close();
+        });
+        HBox okBox = new HBox();
+        okBox.getChildren().add(okButton);
+        okBox.setSpacing(10.0);
+        okBox.setAlignment(Pos.CENTER);
+        okBox.setPadding(marginlessInsets);
+        Text text = new Text(invalidFileText);
+        exitPane.setBottom(okBox);
+        exitPane.setCenter(text);
+        Scene scene = new Scene(exitPane, 200, 100);
+        dialogStage.setScene(scene);
+        dialogStage.setTitle(invalidFileTitle);
         dialogStage.setResizable(false);
         dialogStage.show();
     }
